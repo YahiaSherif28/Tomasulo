@@ -3,20 +3,60 @@ import storage.Buffer;
 import storage.Memory;
 import storage.RegisterFile;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class Tomasulo implements InstructionListener {
     Queue<Instruction> instructionQueue;
-    ArrayList<Instruction> readyToWriteBack;
+    Queue<Instruction> readyToWriteBack;
     Buffer addBuffer, mulBuffer, loadBuffer, storeBuffer;
+    Buffer[] buffers;
     HashMap<String, ArrayList<Instruction>> waitingOnValue;
     RegisterFile registerFile;
     Memory memory;
 
-    void go() {
 
+    public Tomasulo(String filePath) {
+        instructionQueue = new LinkedList<>();
+        readyToWriteBack = new LinkedList<>();
+        addBuffer = new Buffer("A", 3);
+        mulBuffer = new Buffer("M", 2);
+        loadBuffer = new Buffer("L", 5);
+        storeBuffer = new Buffer("S", 5);
+        buffers = new Buffer[]{addBuffer, mulBuffer, loadBuffer, storeBuffer};
+        waitingOnValue = new HashMap<>();
+        registerFile = new RegisterFile(32);
+        memory = new Memory(128);
+        instructionQueue = InputReader.readInput(filePath);
+    }
+
+
+    void go() {
+        while (true) {
+            issue();
+            exec();
+            writeBack();
+            updateStatus();
+        }
+    }
+
+
+    public void updateStatus() {
+        for (Buffer buffer : buffers) {
+            buffer.changeIssuedToReady();
+            buffer.getReadyToWriteBack();
+            buffer.removeFinishedInstructions();
+        }
+    }
+
+    public void writeBack() {
+        if (!readyToWriteBack.isEmpty()) {
+            Instruction instruction = readyToWriteBack.poll();
+            instruction.writeBack();
+        }
     }
 
     public Buffer getBuffer(Instruction instruction) {
@@ -35,6 +75,11 @@ public class Tomasulo implements InstructionListener {
         throw new RuntimeException();
     }
 
+    public void exec() {
+        for (Buffer buffer : buffers) {
+            buffer.exec();
+        }
+    }
 
     public void issue() {
         if (instructionQueue.isEmpty()) {
@@ -49,13 +94,14 @@ public class Tomasulo implements InstructionListener {
         }
     }
 
-    Instruction createInstruction(String line) {
-
+    public void addInWaitingOnValue(String label, Instruction instruction) {
+        ArrayList<Instruction> list = waitingOnValue.getOrDefault(label, new ArrayList<>());
+        list.add(instruction);
+        waitingOnValue.put(label, list);
     }
 
-
-
     public void issueALU(Instruction instruction) {
+
         registerFile.setLabel(instruction.getLabel(), instruction.getDestinationRegister());
         Double value1 = registerFile.getValue(instruction.getSourceRegister1());
         String label1 = registerFile.getLabel(instruction.getSourceRegister1());
@@ -73,7 +119,14 @@ public class Tomasulo implements InstructionListener {
         if (label2 != null) {
             instruction.setQj(label2);
         }
+        if (instruction.getQi() != null) {
+            addInWaitingOnValue(instruction.getQi(), instruction);
+        }
+        if (instruction.getQj() != null) {
+            addInWaitingOnValue(instruction.getQj(), instruction);
+        }
     }
+
     public void issueStore(Store instruction) {
         Double value1 = registerFile.getValue(instruction.getSourceRegister1());
         String label1 = registerFile.getLabel(instruction.getSourceRegister1());
@@ -83,8 +136,12 @@ public class Tomasulo implements InstructionListener {
         if (label1 != null) {
             instruction.setQi(label1);
         }
+        if (instruction.getQi() != null) {
+            addInWaitingOnValue(instruction.getQi(), instruction);
+        }
     }
-    public void issueLoad(Store instruction) {
+
+    public void issueLoad(Load instruction) {
         registerFile.setLabel(instruction.getLabel(), instruction.getDestinationRegister());
     }
 

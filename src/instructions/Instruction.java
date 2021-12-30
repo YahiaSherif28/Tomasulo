@@ -1,18 +1,19 @@
 package instructions;
 
-public abstract class Instruction {
+import instructions.Status.*;
 
+import static instructions.Status.*;
+
+public abstract class Instruction {
 
     int destinationRegister, sourceRegister1, sourceRegister2;
     Double vi, vj;
-
-
-
     String qi, qj;
     int cyclesLeft;
     Status status;
     String label;
     InstructionListener listener;
+
 
     public void setVi(Double vi) {
         this.vi = vi;
@@ -29,6 +30,23 @@ public abstract class Instruction {
     public void setQj(String qj) {
         this.qj = qj;
     }
+
+    public Double getVi() {
+        return vi;
+    }
+
+    public Double getVj() {
+        return vj;
+    }
+
+    public String getQi() {
+        return qi;
+    }
+
+    public String getQj() {
+        return qj;
+    }
+
     public int getDestinationRegister() {
         return destinationRegister;
     }
@@ -40,6 +58,7 @@ public abstract class Instruction {
     public int getSourceRegister2() {
         return sourceRegister2;
     }
+
     public String getLabel() {
         return label;
     }
@@ -56,24 +75,36 @@ public abstract class Instruction {
         this.status = status;
     }
 
-    boolean canStartExec() { // return true if it can start
-
+    public void exec() { // return has finished or not
+        cyclesLeft--;
+        if (cyclesLeft == 0) {
+            status = READY_TO_WRITE_BACK;
+        }
     }
 
-    boolean exec() { // return has finished or not
-
-    }
-
-    boolean hasFinishedExecution() {
-
-    }
 
     public void labelReady(String label, Double value) {
-
+        if (qi.equals(label)) {
+            qi = null;
+            vi = value;
+        }
+        if (qj.equals(label)) {
+            qj = null;
+            vj = value;
+        }
+        if (status == WAITING_ON_VALUE && qi == null && qj == null) {
+            status = EXECUTING;
+        }
     }
 
     public abstract void writeBack();
 
     public abstract void issue();
 
+    public void changeIssuedToReady() {
+        status = WAITING_ON_VALUE;
+        if (qi == null && qj == null) {
+            status = EXECUTING;
+        }
+    }
 }
