@@ -1,7 +1,6 @@
-import instructions.Instruction;
+import instructions.*;
 import storage.Buffer;
 import storage.Memory;
-import instructions.InstructionListener;
 import storage.RegisterFile;
 
 import java.util.ArrayList;
@@ -18,6 +17,39 @@ public class Tomasulo implements InstructionListener {
 
     void go() {
 
+    }
+
+    public Buffer getBuffer(Instruction instruction) {
+        if (instruction instanceof Add || instruction instanceof Sub) {
+            return addBuffer;
+        }
+        if (instruction instanceof Mul || instruction instanceof Div) {
+            return mulBuffer;
+        }
+        if (instruction instanceof Load) {
+            return loadBuffer;
+        }
+        if (instruction instanceof Store) {
+            return storeBuffer;
+        }
+        throw new RuntimeException();
+    }
+
+    public void writeLabelInRegisterFile(int address, String label) {
+
+    }
+
+    public void issue() {
+        if (instructionQueue.isEmpty()) {
+            return;
+        }
+        Instruction current = instructionQueue.peek();
+        Buffer buffer = getBuffer(current);
+        String label = buffer.addInstruction(current);
+        if (label != null) {
+            instructionQueue.poll();
+            writeLabelInRegisterFile(current.getDestinationRegister(), label);
+        }
     }
 
     Instruction createInstruction(String line) {
