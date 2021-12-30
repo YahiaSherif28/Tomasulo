@@ -1,6 +1,8 @@
 import instructions.Instruction;
 import storage.Buffer;
 import storage.Memory;
+import instructions.InstructionListener;
+import storage.RegisterFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,16 +32,16 @@ public class Tomasulo implements InstructionListener {
 
     }
 
-    void onLoad(int memoryAddress, String label) {
+    public void onLoad(int memoryAddress, String label) {
         Double value = readFromMemory(memoryAddress);
         publishLabel(label, value);
     }
 
-    void onStore(int address, Double value) {
-
+    public void onStore(int address, Double value) {
+        writeInMemory(address, value);
     }
 
-    void onALU(String label, Double value) {
+    public void onALU(String label, Double value) {
         publishLabel(label, value);
     }
 
@@ -50,6 +52,7 @@ public class Tomasulo implements InstructionListener {
             }
             waitingOnValue.remove(label);
         }
+        registerFile.publishLabel(label, value);
     }
 
 

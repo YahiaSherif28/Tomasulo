@@ -6,6 +6,11 @@ public abstract class Instruction {
     int cyclesLeft;
     Status status;
     String label;
+
+    public String getLabel() {
+        return label;
+    }
+
     InstructionListener listener;
     boolean canStartExec() { // return true if it can start
 
@@ -20,6 +25,6 @@ public abstract class Instruction {
     public void labelReady(String label, Double value) {
 
     }
-    abstract void writeBack();
+    public abstract void writeBack();
 
 }
