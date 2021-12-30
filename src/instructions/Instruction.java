@@ -44,6 +44,18 @@ public abstract class Instruction {
         return label;
     }
 
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     boolean canStartExec() { // return true if it can start
 
     }
