@@ -1,3 +1,5 @@
+package storage;
+
 import instructions.Instruction;
 
 public class Buffer {

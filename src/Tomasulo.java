@@ -1,4 +1,6 @@
 import instructions.Instruction;
+import storage.Buffer;
+import storage.Memory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
