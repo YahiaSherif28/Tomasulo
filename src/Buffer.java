@@ -1,3 +1,5 @@
+import instructions.Instruction;
+
 public class Buffer {
     String label;
     Instruction[] buffer;

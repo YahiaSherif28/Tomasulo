@@ -1,3 +1,5 @@
+package instructions;
+
 public abstract class Instruction {
     Double vi, vj;
     String qi, qj;
@@ -15,7 +17,7 @@ public abstract class Instruction {
     boolean hasFinishedExecution() {
 
     }
-    void labelReady(String label, Double value) {
+    public void labelReady(String label, Double value) {
 
     }
     abstract void writeBack();
