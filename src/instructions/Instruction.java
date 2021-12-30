@@ -5,12 +5,30 @@ public abstract class Instruction {
 
     int destinationRegister, sourceRegister1, sourceRegister2;
     Double vi, vj;
+
+
+
     String qi, qj;
     int cyclesLeft;
     Status status;
     String label;
     InstructionListener listener;
 
+    public void setVi(Double vi) {
+        this.vi = vi;
+    }
+
+    public void setVj(Double vj) {
+        this.vj = vj;
+    }
+
+    public void setQi(String qi) {
+        this.qi = qi;
+    }
+
+    public void setQj(String qj) {
+        this.qj = qj;
+    }
     public int getDestinationRegister() {
         return destinationRegister;
     }
@@ -43,5 +61,7 @@ public abstract class Instruction {
     }
 
     public abstract void writeBack();
+
+    public abstract void issue();
 
 }

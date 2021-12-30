@@ -6,7 +6,10 @@ public class Store extends Instruction{
         listener.onStore(getAddress(),vi + vj);
     }
 
-    private int getAddress() {
+    public int getAddress() {
         return address;
+    }
+    public void issue() {
+        listener.issueStore(this);
     }
 }

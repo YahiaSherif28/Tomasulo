@@ -35,9 +35,6 @@ public class Tomasulo implements InstructionListener {
         throw new RuntimeException();
     }
 
-    public void writeLabelInRegisterFile(int address, String label) {
-
-    }
 
     public void issue() {
         if (instructionQueue.isEmpty()) {
@@ -48,7 +45,7 @@ public class Tomasulo implements InstructionListener {
         String label = buffer.addInstruction(current);
         if (label != null) {
             instructionQueue.poll();
-            writeLabelInRegisterFile(current.getDestinationRegister(), label);
+            current.issue();
         }
     }
 
@@ -56,21 +53,48 @@ public class Tomasulo implements InstructionListener {
 
     }
 
-    void writeInMemory(int address, Double value) {
 
+
+    public void issueALU(Instruction instruction) {
+        registerFile.setLabel(instruction.getLabel(), instruction.getDestinationRegister());
+        Double value1 = registerFile.getValue(instruction.getSourceRegister1());
+        String label1 = registerFile.getLabel(instruction.getSourceRegister1());
+        if (value1 != null) {
+            instruction.setVi(value1);
+        }
+        if (label1 != null) {
+            instruction.setQi(label1);
+        }
+        Double value2 = registerFile.getValue(instruction.getSourceRegister2());
+        String label2 = registerFile.getLabel(instruction.getSourceRegister2());
+        if (value2 != null) {
+            instruction.setVj(value2);
+        }
+        if (label2 != null) {
+            instruction.setQj(label2);
+        }
     }
-
-    Double readFromMemory(int address) {
-
+    public void issueStore(Store instruction) {
+        Double value1 = registerFile.getValue(instruction.getSourceRegister1());
+        String label1 = registerFile.getLabel(instruction.getSourceRegister1());
+        if (value1 != null) {
+            instruction.setVi(value1);
+        }
+        if (label1 != null) {
+            instruction.setQi(label1);
+        }
+    }
+    public void issueLoad(Store instruction) {
+        registerFile.setLabel(instruction.getLabel(), instruction.getDestinationRegister());
     }
 
     public void onLoad(int memoryAddress, String label) {
-        Double value = readFromMemory(memoryAddress);
+        Double value = memory.get(memoryAddress);
         publishLabel(label, value);
     }
 
     public void onStore(int address, Double value) {
-        writeInMemory(address, value);
+        memory.put(address, value);
     }
 
     public void onALU(String label, Double value) {

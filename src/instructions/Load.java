@@ -10,4 +10,7 @@ public class Load extends Instruction {
     public void writeBack() {
         listener.onLoad(getAddress(), getLabel());
     }
+    public void issue() {
+        listener.issueLoad(this);
+    }
 }

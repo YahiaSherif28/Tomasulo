@@ -8,13 +8,13 @@ public class Memory {
         values = new Double[size];
     }
 
-    Double get(int address){
+    public Double get(int address){
         if(address>=0 && address<size)
             return values[address];
         return null;
     }
 
-    boolean put(int address, Double value){
+    public boolean put(int address, Double value){
         if(address>=0 && address<size) {
             values[address] = value;
             return true;
