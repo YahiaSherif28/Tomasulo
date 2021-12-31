@@ -42,7 +42,7 @@ public class Buffer {
     public ArrayList<Instruction> getReadyToWriteBack() {
         ArrayList<Instruction> list = new ArrayList<>();
         for (Instruction instruction : buffer) {
-            if (instruction.getStatus() == READY_TO_WRITE_BACK) {
+            if (instruction != null && instruction.getStatus() == READY_TO_WRITE_BACK) {
                 list.add(instruction);
                 instruction.setStatus(WRITING_BACK);
             }
