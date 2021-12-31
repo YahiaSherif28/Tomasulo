@@ -14,6 +14,14 @@ public abstract class Instruction {
     String label;
     InstructionListener listener;
 
+    public Instruction(int destinationRegister, int sourceRegister1, int sourceRegister2, int cyclesLeft, InstructionListener listener) {
+        this.destinationRegister = destinationRegister;
+        this.sourceRegister1 = sourceRegister1;
+        this.sourceRegister2 = sourceRegister2;
+        this.cyclesLeft = cyclesLeft;
+        this.listener = listener;
+        status = IN_QUEUE;
+    }
 
     public void setVi(Double vi) {
         this.vi = vi;

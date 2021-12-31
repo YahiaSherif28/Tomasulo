@@ -3,6 +3,7 @@ import storage.Buffer;
 import storage.Memory;
 import storage.RegisterFile;
 
+import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +19,6 @@ public class Tomasulo implements InstructionListener {
     RegisterFile registerFile;
     Memory memory;
 
-
     public Tomasulo(String filePath) {
         instructionQueue = new LinkedList<>();
         readyToWriteBack = new LinkedList<>();
@@ -30,7 +30,7 @@ public class Tomasulo implements InstructionListener {
         waitingOnValue = new HashMap<>();
         registerFile = new RegisterFile(32);
         memory = new Memory(128);
-        instructionQueue = InputReader.readInput(filePath);
+        instructionQueue = InputReader.readInput(filePath, this);
     }
 
 
@@ -166,6 +166,11 @@ public class Tomasulo implements InstructionListener {
             waitingOnValue.remove(label);
         }
         registerFile.publishLabel(label, value);
+    }
+
+    public static void main(String[] args) {
+        Tomasulo test = new Tomasulo("test1.txt");
+        test.go();
     }
 
 
