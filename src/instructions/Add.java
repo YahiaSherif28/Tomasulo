@@ -15,7 +15,7 @@ public class Add extends Instruction {
     }
 
     public void issue() {
-        //status = ISSUED;
+        status = ISSUED;
         listener.issueALU(this);
     }
 }
