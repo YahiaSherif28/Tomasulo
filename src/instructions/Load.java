@@ -6,8 +6,8 @@ import static instructions.Status.ISSUED;
 public class Load extends Instruction {
     int address;
 
-    public Load(int destinationRegister, int memAddress, int latency, InstructionListener listener) {
-        super(destinationRegister, 0, 0, latency, listener);
+    public Load(int destinationRegister, int memAddress, int latency, InstructionListener listener, String assemblyInstruction) {
+        super(destinationRegister, 0, 0, latency, listener, assemblyInstruction);
         address = memAddress;
     }
 
@@ -17,10 +17,11 @@ public class Load extends Instruction {
 
     public void writeBack() {
         listener.onLoad(getAddress(), getLabel());
-        status = FINISHED;
+        setStatus(FINISHED);
     }
+
     public void issue() {
-        status = ISSUED;
+        setStatus(ISSUED);
         listener.issueLoad(this);
     }
 

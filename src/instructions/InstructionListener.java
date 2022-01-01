@@ -13,4 +13,6 @@ public interface InstructionListener {
     void issueLoad(Load instruction);
 
     void issueStore(Store instruction);
+
+    int getCurrentCycle();
 }

@@ -62,21 +62,21 @@ public class InputReader {
         Instruction newInstruction = null;
         if(instructionType.equals("L.D")) {
             int memAddress = Integer.parseInt(sourceRegister1OrAddress);
-            newInstruction = new Load(destinationRegister, memAddress, loadLatency, listener);
+            newInstruction = new Load(destinationRegister, memAddress, loadLatency, listener, assemblyInstruction);
         } else if(instructionType.equals("S.D")) {
             int memAddress = Integer.parseInt(sourceRegister1OrAddress);
-            newInstruction = new Store(destinationRegister, memAddress, storeLatency, listener);
+            newInstruction = new Store(destinationRegister, memAddress, storeLatency, listener, assemblyInstruction);
         } else {
             int sourceReg1 = Integer.parseInt(sourceRegister1OrAddress.substring(1));
             int sourceReg2 = Integer.parseInt(tokenizer.nextToken().substring(1));
             if(instructionType.equals("ADD.D")) {
-                newInstruction = new Add(destinationRegister, sourceReg1, sourceReg2, addLatency, listener);
+                newInstruction = new Add(destinationRegister, sourceReg1, sourceReg2, addLatency, listener, assemblyInstruction);
             } else if(instructionType.equals("SUB.D")) {
-                newInstruction = new Sub(destinationRegister, sourceReg1, sourceReg2, subLatency, listener);
+                newInstruction = new Sub(destinationRegister, sourceReg1, sourceReg2, subLatency, listener, assemblyInstruction);
             } else if(instructionType.equals("MUL.D")) {
-                newInstruction = new Mul(destinationRegister, sourceReg1, sourceReg2, mulLatency, listener);
+                newInstruction = new Mul(destinationRegister, sourceReg1, sourceReg2, mulLatency, listener, assemblyInstruction);
             } else if(instructionType.equals("DIV.D")) {
-                newInstruction = new Div(destinationRegister, sourceReg1, sourceReg2, divLatency, listener);
+                newInstruction = new Div(destinationRegister, sourceReg1, sourceReg2, divLatency, listener, assemblyInstruction);
             }
         }
         return newInstruction;

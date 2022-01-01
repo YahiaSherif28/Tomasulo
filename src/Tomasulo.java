@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Tomasulo implements InstructionListener {
+    ArrayList<Instruction> instructions;
     Queue<Instruction> instructionQueue;
     Queue<Instruction> readyToWriteBack;
     Buffer addBuffer, mulBuffer, loadBuffer, storeBuffer;
@@ -18,7 +19,7 @@ public class Tomasulo implements InstructionListener {
     HashMap<String, ArrayList<Instruction>> waitingOnValue;
     RegisterFile registerFile;
     Memory memory;
-
+    int cycle;
     public Tomasulo(String filePath) {
         instructionQueue = new LinkedList<>();
         readyToWriteBack = new LinkedList<>();
@@ -31,24 +32,35 @@ public class Tomasulo implements InstructionListener {
         registerFile = new RegisterFile(32);
         memory = new Memory(128);
         instructionQueue = InputReader.readInput(filePath, this);
+        instructions = new ArrayList(instructionQueue);
     }
 
 
     void go() {
-        int loopCounter = 0;
-        showState(loopCounter);
-        while (loopCounter < 20) {
-            loopCounter++;
+        cycle = 0;
+        showState();
+        while (!allInstructionsFinished()) {
+            cycle++;
             issue();
             exec();
             writeBack();
-            showState(loopCounter);
+            showState();
             updateStatus();
         }
+        cycle++;
+        showState();
     }
 
-    private void showState(int loopCounter) {
-        System.out.println("Current Loop: " + loopCounter);
+    public boolean allInstructionsFinished(){
+        for(Instruction instruction: instructions)
+            if(instruction.getStatus() != Status.FINISHED)
+                return false;
+
+        return true;
+    }
+
+    private void showState() {
+        System.out.println("Current Loop: " + cycle);
         System.out.println("==============");
         System.out.println("Instruction Queue:");
         System.out.println("===================");
@@ -184,6 +196,11 @@ public class Tomasulo implements InstructionListener {
         if (instruction.getQi() != null) {
             addInWaitingOnValue(instruction.getQi(), instruction);
         }
+    }
+
+    @Override
+    public int getCurrentCycle() {
+        return cycle;
     }
 
     public void issueLoad(Load instruction) {

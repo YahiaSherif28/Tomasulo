@@ -10,17 +10,21 @@ public abstract class Instruction {
     Double vi, vj;
     String qi, qj;
     int cyclesLeft;
-    Status status;
+    private Status status;
     String label;
     InstructionListener listener;
+    String assemblyInstruction;
+    Integer issueCycle, startExecCycle, finishExecCycle, writeBackCycle;
 
-    public Instruction(int destinationRegister, int sourceRegister1, int sourceRegister2, int cyclesLeft, InstructionListener listener) {
+    public Instruction(int destinationRegister, int sourceRegister1, int sourceRegister2, int cyclesLeft,
+                       InstructionListener listener, String assemblyInstruction) {
         this.destinationRegister = destinationRegister;
         this.sourceRegister1 = sourceRegister1;
         this.sourceRegister2 = sourceRegister2;
         this.cyclesLeft = cyclesLeft;
         this.listener = listener;
-        status = IN_QUEUE;
+        this.assemblyInstruction = assemblyInstruction;
+        setStatus(IN_QUEUE);
     }
 
     public void setVi(Double vi) {
@@ -81,12 +85,21 @@ public abstract class Instruction {
 
     public void setStatus(Status status) {
         this.status = status;
+        Integer cycle = listener.getCurrentCycle();
+        if(status == ISSUED)
+            issueCycle = cycle;
+        else if(status == EXECUTING)
+            startExecCycle = cycle;
+        else if(status == READY_TO_WRITE_BACK)
+            finishExecCycle = cycle;
+        else if(status == FINISHED)
+            writeBackCycle = cycle;
     }
 
     public void exec() { // return has finished or not
         cyclesLeft--;
         if (cyclesLeft == 0) {
-            status = READY_TO_WRITE_BACK;
+            setStatus(READY_TO_WRITE_BACK);
         }
     }
 
@@ -101,7 +114,7 @@ public abstract class Instruction {
             vj = value;
         }
         if (status == WAITING_ON_VALUE && qi == null && qj == null) {
-            status = EXECUTING;
+            setStatus(EXECUTING);
         }
     }
 
@@ -110,9 +123,9 @@ public abstract class Instruction {
     public abstract void issue();
 
     public void changeIssuedToReady() {
-        status = WAITING_ON_VALUE;
+        setStatus(WAITING_ON_VALUE);
         if (qi == null && qj == null) {
-            status = EXECUTING;
+            setStatus(EXECUTING);
         }
     }
 
