@@ -18,4 +18,8 @@ public class Add extends Instruction {
         status = ISSUED;
         listener.issueALU(this);
     }
+
+    public String toString() {
+        return "ADD.D " + super.toString();
+    }
 }

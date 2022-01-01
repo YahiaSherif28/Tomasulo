@@ -18,4 +18,8 @@ public class Div extends Instruction {
         status = ISSUED;
         listener.issueALU(this);
     }
+
+    public String toString() {
+        return "DIV.D " + super.toString();
+    }
 }

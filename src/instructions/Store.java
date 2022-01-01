@@ -24,4 +24,8 @@ public class Store extends Instruction {
         status = ISSUED;
         listener.issueStore(this);
     }
+
+    public String toString() {
+        return "S.D " + super.toString() + String.format(", address: %s", address);
+    }
 }

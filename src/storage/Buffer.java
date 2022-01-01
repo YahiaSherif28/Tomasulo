@@ -64,4 +64,12 @@ public class Buffer {
             }
         }
     }
+
+    public String toString() {
+        String printValue = String.format("Buffer: %s, with size: %s\n", label, size);
+        for(int i = 0; i < size; i++)
+            if(buffer[i] != null)
+                printValue += buffer[i].toString() + "\n";
+        return printValue;
+    }
 }

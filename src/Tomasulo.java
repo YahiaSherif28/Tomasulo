@@ -35,12 +35,57 @@ public class Tomasulo implements InstructionListener {
 
 
     void go() {
-        while (true) {
+        int loopCounter = 0;
+        showState(loopCounter);
+        while (loopCounter < 20) {
+            loopCounter++;
             issue();
             exec();
             writeBack();
             updateStatus();
+            showState(loopCounter);
         }
+    }
+
+    private void showState(int loopCounter) {
+        System.out.println("Current Loop: " + loopCounter);
+        System.out.println("==============");
+        System.out.println("Instruction Queue:");
+        System.out.println("===================");
+        for(Instruction i : instructionQueue)
+            System.out.println(i);
+        System.out.println("---------------------------------------------------");
+        System.out.println("Ready To Write Back Instructions:");
+        System.out.println("===================");
+        for(Instruction i : readyToWriteBack)
+            System.out.println(i);
+        System.out.println("---------------------------------------------------");
+        System.out.println("Add/Sub Buffer:");
+        System.out.println("===================");
+        System.out.println(addBuffer);
+        System.out.println("---------------------------------------------------");
+        System.out.println("Mul/Div Buffer:");
+        System.out.println("===================");
+        System.out.println(mulBuffer);
+        System.out.println("---------------------------------------------------");
+        System.out.println("Load Buffer:");
+        System.out.println("===================");
+        System.out.println(loadBuffer);
+        System.out.println("---------------------------------------------------");
+        System.out.println("Store Buffer:");
+        System.out.println("===================");
+        System.out.println(storeBuffer);
+        System.out.println("---------------------------------------------------");
+        System.out.println("Register File:");
+        System.out.println("===================");
+        System.out.println(registerFile);
+        System.out.println("---------------------------------------------------");
+        System.out.println("Memory:");
+        System.out.println("===================");
+        System.out.println(memory);
+        System.out.println("---------------------------------------------------");
+        //HashMap<String, ArrayList<Instruction>> waitingOnValue;
+        System.out.println("****************************************************");
     }
 
 

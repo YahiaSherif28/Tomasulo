@@ -115,4 +115,10 @@ public abstract class Instruction {
             status = EXECUTING;
         }
     }
+
+    public String toString() {
+        return String.format("destinationRegister: %s, sourceRegister1: %s, sourceRegister2: %s, vi: %s," +
+                        " vj: %s, qi: %s, qj: %s, cyclesLeft: %s, status: %s, label: %s",
+                destinationRegister, sourceRegister1, sourceRegister2, vi, vj, qi, qj, cyclesLeft, status, label);
+    }
 }

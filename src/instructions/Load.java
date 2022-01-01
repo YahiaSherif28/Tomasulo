@@ -23,4 +23,8 @@ public class Load extends Instruction {
         status = ISSUED;
         listener.issueLoad(this);
     }
+
+    public String toString() {
+        return "L.D " + super.toString() + String.format(", address: %s", address);
+    }
 }

@@ -1,4 +1,7 @@
 package storage;
+
+import java.util.Arrays;
+
 public class Memory {
     final int MAX_POSSIBLE_SIZE = (int)1e6;
     int size;
@@ -6,6 +9,7 @@ public class Memory {
     public Memory(int Memorysize){
         size = Math.min(Memorysize, MAX_POSSIBLE_SIZE);
         values = new Double[size];
+        Arrays.fill(values, 1.0);
     }
 
     public Double get(int address){

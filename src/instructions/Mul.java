@@ -17,4 +17,8 @@ public class Mul extends Instruction {
         status = ISSUED;
         listener.issueALU(this);
     }
+
+    public String toString() {
+        return "MUL.D " + super.toString();
+    }
 }

@@ -12,4 +12,8 @@ public class Register {
         value = null;
         waitingOnLabel = null;
     }
+
+    public String toString() {
+        return String.format("Register: %s => Value: %s, waitingOnLabel: %s", num, value, waitingOnLabel);
+    }
 }

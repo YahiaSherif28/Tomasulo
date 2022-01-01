@@ -35,4 +35,11 @@ public class RegisterFile {
         return registers[address].value;
     }
 
+    public String toString() {
+        String printValue = "Register File with size: " + size + "\n";
+        for(int i = 0; i < size; i++)
+            printValue += registers[i].toString() + "\n";
+        return printValue;
+    }
+
 }
