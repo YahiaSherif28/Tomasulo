@@ -22,4 +22,32 @@ public class Mul extends Instruction {
     public String toString() {
         return "MUL.D " + super.toString();
     }
+
+    public String getInstruction(){
+        return "MUL.D "+ "F"+super.getDestinationRegister()+" "+"F"+getSourceRegister1()+" "+"F"+getSourceRegister2();
+    }
+    public String getType(){
+        return "MUL.D";
+    }
+
+    @Override
+    public int getAddress() {
+        return 0;
+    }
+
+    @Override
+    public Mul clone(){
+        Mul ret = new Mul(this.destinationRegister,this.sourceRegister1,this.sourceRegister2,this.cyclesLeft,this.listener,this.assemblyInstruction);
+        ret.label= this.label;
+        ret.qi = this.qi;
+        ret.qj = this.qj;
+        ret.vi = this.vi;
+        ret.vj = this.vj;
+        ret.issueCycle = this.issueCycle;
+        ret.setStatus(this.getStatus());
+        ret.finishExecCycle = this.finishExecCycle;
+        ret.startExecCycle = this.startExecCycle;
+        ret.writeBackCycle = this.writeBackCycle;
+        return ret;
+    }
 }

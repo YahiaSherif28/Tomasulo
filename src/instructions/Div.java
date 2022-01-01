@@ -22,4 +22,33 @@ public class Div extends Instruction {
     public String toString() {
         return "DIV.D " + super.toString();
     }
+
+    public String getInstruction() {
+        return "DIV.D "+ "F"+super.getDestinationRegister()+" "+"F"+super.getSourceRegister1()+" "+"F"+super.getSourceRegister2();
+    }
+    public String getType(){
+        return "DIV.D ";
+    }
+
+    @Override
+    public int getAddress() {
+        return 0;
+    }
+
+    @Override
+
+    public Div clone(){
+        Div ret = new Div(this.destinationRegister,this.sourceRegister1,this.sourceRegister2,this.cyclesLeft,this.listener,this.assemblyInstruction);
+        ret.label= this.label;
+        ret.qi = this.qi;
+        ret.qj = this.qj;
+        ret.vi = this.vi;
+        ret.vj = this.vj;
+        ret.issueCycle = this.issueCycle;
+        ret.setStatus(this.getStatus());
+        ret.finishExecCycle = this.finishExecCycle;
+        ret.startExecCycle = this.startExecCycle;
+        ret.writeBackCycle = this.writeBackCycle;
+        return ret;
+    }
 }

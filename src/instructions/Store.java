@@ -27,4 +27,26 @@ public class Store extends Instruction {
     public String toString() {
         return "S.D " + super.toString() + String.format(", address: %s", address);
     }
+    public String getInstruction() {
+        return "S.D " + "F"+super.getSourceRegister1() + " "+ address;
+    }
+    public String getType(){
+        return "S.D";
+    }
+
+    @Override
+    public Load clone(){
+        Load ret = new Load(this.sourceRegister1,this.address,this.cyclesLeft,this.listener,this.assemblyInstruction);
+        ret.label= this.label;
+        ret.qi = this.qi;
+        ret.qj = this.qj;
+        ret.vi = this.vi;
+        ret.vj = this.vj;
+        ret.issueCycle = this.issueCycle;
+        ret.setStatus(this.getStatus());
+        ret.finishExecCycle = this.finishExecCycle;
+        ret.startExecCycle = this.startExecCycle;
+        ret.writeBackCycle = this.writeBackCycle;
+        return ret;
+    }
 }

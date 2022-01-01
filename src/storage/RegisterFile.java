@@ -12,6 +12,15 @@ public class RegisterFile {
         }
     }
 
+    public Register[] getRegisters() {
+        return registers;
+    }
+
+    public RegisterFile clone(){
+        RegisterFile ret = new RegisterFile(this.size);
+        for (int i =0; i<this.size; i++) ret.registers[i] = this.registers[i].clone();
+        return ret;
+    }
     // Inform the registers with the values they are waiting on from Instruction with the given label
     public void publishLabel(String label, Double value){
         for(Register reg: registers){

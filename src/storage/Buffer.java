@@ -2,7 +2,6 @@ package storage;
 
 import instructions.Instruction;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static instructions.Status.*;
@@ -16,6 +15,18 @@ public class Buffer {
         this.label = label;
         this.size = size;
         buffer = new Instruction[size];
+    }
+
+    public Instruction[] getBuffer() {
+        return buffer;
+    }
+
+    public Buffer clone(){
+        Buffer ret = new Buffer(this.label,this.size);
+        for (int i =0; i<this.size; i++){
+            ret.buffer[i]= this.buffer[i]==null?null:this.buffer[i].clone();
+        }
+        return ret;
     }
 
     public String addInstruction(Instruction instruction) { // return Label or null if couldn't add

@@ -13,6 +13,25 @@ public class Register {
         waitingOnLabel = null;
     }
 
+    public Register clone(){
+        Register ret = new Register(this.num);
+        ret.value = this.value;
+        ret.waitingOnLabel = this.waitingOnLabel;
+        return ret;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public String getWaitingOnLabel() {
+        return waitingOnLabel;
+    }
+
     public String toString() {
         return String.format("Register: %s => Value: %s, waitingOnLabel: %s", num, value, waitingOnLabel);
     }

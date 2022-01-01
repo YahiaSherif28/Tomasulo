@@ -28,4 +28,26 @@ public class Load extends Instruction {
     public String toString() {
         return "L.D " + super.toString() + String.format(", address: %s", address);
     }
+    public String getInstruction() {
+        return "L.D " +"F"+super.getDestinationRegister() + " "+address;
+    }
+    public String getType(){
+        return "L.D ";
+    }
+
+    @Override
+    public Load clone(){
+        Load ret = new Load(this.destinationRegister,this.address,this.cyclesLeft,this.listener,this.assemblyInstruction);
+        ret.label= this.label;
+        ret.qi = this.qi;
+        ret.qj = this.qj;
+        ret.vi = this.vi;
+        ret.vj = this.vj;
+        ret.issueCycle = this.issueCycle;
+        ret.setStatus(this.getStatus());
+        ret.finishExecCycle = this.finishExecCycle;
+        ret.startExecCycle = this.startExecCycle;
+        ret.writeBackCycle = this.writeBackCycle;
+        return ret;
+    }
 }

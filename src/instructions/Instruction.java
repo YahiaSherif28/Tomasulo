@@ -1,7 +1,5 @@
 package instructions;
 
-import instructions.Status.*;
-
 import static instructions.Status.*;
 
 public abstract class Instruction {
@@ -26,6 +24,27 @@ public abstract class Instruction {
         this.assemblyInstruction = assemblyInstruction;
         setStatus(IN_QUEUE);
     }
+
+    public Integer getIssueCycle() {
+        return issueCycle;
+    }
+
+    public Integer getStartExecCycle() {
+        return startExecCycle;
+    }
+
+    public Integer getFinishExecCycle() {
+        return finishExecCycle;
+    }
+
+    public Integer getWriteBackCycle() {
+        return writeBackCycle;
+    }
+
+    public abstract Instruction clone();
+    public abstract String getInstruction();
+    public abstract String getType();
+    public abstract int getAddress();
 
     public void setVi(Double vi) {
         this.vi = vi;

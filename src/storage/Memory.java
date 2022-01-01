@@ -12,6 +12,15 @@ public class Memory {
         Arrays.fill(values, 1.0);
     }
 
+    public Double[] getValues() {
+        return values;
+    }
+
+    public Memory clone(){
+        Memory ret = new Memory(this.size);
+        for(int i =0; i< this.size; i++) ret.values[i] = this.values[i];
+        return ret;
+    }
     public Double get(int address){
         if(address>=0 && address<size)
             return values[address];

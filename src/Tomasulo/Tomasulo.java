@@ -1,10 +1,10 @@
+package Tomasulo;
+
 import instructions.*;
 import storage.Buffer;
 import storage.Memory;
 import storage.RegisterFile;
 
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -34,21 +34,27 @@ public class Tomasulo implements InstructionListener {
         instructionQueue = InputReader.readInput(filePath, this);
         instructions = new ArrayList(instructionQueue);
     }
+    public ArrayList<State> getStates(){
+        return go();
 
+    }
 
-    void go() {
+    ArrayList<State>  go() {
+        ArrayList<State> ret = new ArrayList<>();
         cycle = 0;
-        showState();
+        ret.add(showState());
         while (!allInstructionsFinished()) {
             cycle++;
             issue();
             exec();
             writeBack();
-            showState();
+            ret.add(showState());
             updateStatus();
         }
         cycle++;
-        showState();
+        ret.add(showState());
+
+        return ret;
     }
 
     public boolean allInstructionsFinished(){
@@ -59,7 +65,7 @@ public class Tomasulo implements InstructionListener {
         return true;
     }
 
-    private void showState() {
+    private State showState() {
         System.out.println("Current Loop: " + cycle);
         System.out.println("==============");
         System.out.println("Instruction Queue:");
@@ -98,6 +104,7 @@ public class Tomasulo implements InstructionListener {
         System.out.println("---------------------------------------------------");
         //HashMap<String, ArrayList<Instruction>> waitingOnValue;
         System.out.println("****************************************************");
+        return new State(instructions,addBuffer,mulBuffer,loadBuffer,storeBuffer,registerFile,memory);
     }
 
 
@@ -230,10 +237,10 @@ public class Tomasulo implements InstructionListener {
         registerFile.publishLabel(label, value);
     }
 
-    public static void main(String[] args) {
-        Tomasulo test = new Tomasulo("test1.txt");
-        test.go();
-    }
+//    public static void main(String[] args) {
+//        Tomasulo test = new Tomasulo("test.txt");
+//        test.go();
+//    }
 
 
 }

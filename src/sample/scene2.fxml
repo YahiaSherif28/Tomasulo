@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.scene2Controller">
+   <children>
+      <ImageView fx:id="" fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../back.jpg" />
+         </image>
+      </ImageView>
+      <TitledPane animated="false" layoutX="14.0" layoutY="14.0" prefHeight="250.0" prefWidth="200.0" text="Latencies">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="latencies" layoutX="-1.0" layoutY="-1.0" prefHeight="225.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="name" prefWidth="85.60003662109375" text="Instruction" />
+                      <TableColumn fx:id="value" prefWidth="112.80000305175781" text="Latency" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <Separator layoutX="228.0" layoutY="37.0" orientation="VERTICAL" prefHeight="484.0" prefWidth="0.0" />
+      <TitledPane animated="false" layoutX="14.0" layoutY="554.0" prefHeight="200.0" prefWidth="490.0" text="ADD/SUB BUFFER ">
+         <content>
+            <TableView fx:id="addsub" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="addlabel" prefWidth="65.0" text="LABEL" />
+                <TableColumn fx:id="addop" prefWidth="65.0" text="OP" />
+                  <TableColumn fx:id="addvj" prefWidth="65.0" text="Vj" />
+                  <TableColumn fx:id="addvk" prefWidth="65.0" text="Vk" />
+                  <TableColumn fx:id="addqj" prefWidth="65.0" text="Qj" />
+                  <TableColumn fx:id="addqk" prefWidth="65.0" text="Qk" />
+                  <TableColumn fx:id="addbusy" prefWidth="88.800048828125" text="BUSY" />
+                  <TableColumn prefWidth="65.0" />
+                  <TableColumn prefWidth="65.0" text="OP" />
+                  <TableColumn prefWidth="65.0" text="Vj" />
+                  <TableColumn prefWidth="65.0" text="Vk" />
+                  <TableColumn prefWidth="65.0" text="Qj" />
+                  <TableColumn prefWidth="65.0" text="Qk" />
+                  <TableColumn prefWidth="88.800048828125" text="BUSY" />
+                  <TableColumn prefWidth="65.0" />
+                  <TableColumn prefWidth="65.0" />
+                  <TableColumn prefWidth="65.0" />
+                  <TableColumn prefWidth="65.0" />
+                  <TableColumn prefWidth="65.0" />
+              </columns>
+            </TableView>
+         </content>
+      </TitledPane>
+      <TitledPane animated="false" layoutX="519.0" layoutY="554.0" prefHeight="200.0" prefWidth="490.0" text="MUL/DIV BUFFER">
+         <content>
+            <TableView fx:id="muldiv" prefHeight="200.0" prefWidth="200.0">
+               <columns>
+                  <TableColumn fx:id="mullabel" prefWidth="65.0" text="LABEL" />
+                  <TableColumn fx:id="mulop" prefWidth="65.0" text="OP" />
+                  <TableColumn fx:id="mulvj" prefWidth="65.0" text="Vj" />
+                  <TableColumn fx:id="mulvk" prefWidth="65.0" text="Vk" />
+                  <TableColumn fx:id="mulqj" prefWidth="65.0" text="Qj" />
+                  <TableColumn fx:id="mulqk" prefWidth="65.0" text="Qk" />
+                  <TableColumn fx:id="mulbusy" prefWidth="88.800048828125" text="BUSY" />
+                  <TableColumn prefWidth="65.0" />
+                  <TableColumn prefWidth="65.0" text="OP" />
+                  <TableColumn prefWidth="65.0" text="Vj" />
+                  <TableColumn prefWidth="65.0" text="Vk" />
+                  <TableColumn prefWidth="65.0" text="Qj" />
+                  <TableColumn prefWidth="65.0" text="Qk" />
+                  <TableColumn prefWidth="88.800048828125" text="BUSY" />
+                  <TableColumn prefWidth="65.0" />
+                  <TableColumn prefWidth="65.0" />
+                  <TableColumn prefWidth="65.0" />
+                  <TableColumn prefWidth="65.0" />
+                  <TableColumn prefWidth="65.0" />
+               </columns>
+            </TableView>
+         </content>
+      </TitledPane>
+      <TitledPane animated="false" layoutX="809.0" layoutY="14.0" prefHeight="521.0" prefWidth="200.0" text="MEMORY">
+         <content>
+            <TableView fx:id="memory" prefHeight="500.0" prefWidth="198.0">
+              <columns>
+                <TableColumn fx:id="memname" prefWidth="90.0" text="LABEL" />
+                <TableColumn fx:id="memval" prefWidth="90.0" text="VALUE" />
+              </columns>
+            </TableView>
+         </content>
+      </TitledPane>
+      <Separator layoutX="790.0" layoutY="37.0" orientation="VERTICAL" prefHeight="484.0" prefWidth="0.0" />
+      <TitledPane animated="false" layoutX="243.0" layoutY="37.0" prefHeight="250.0" prefWidth="538.0" text="Instructions">
+         <content>
+            <TableView fx:id="instructions" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="instruction" prefWidth="120.0" text="INSTRUCTION" />
+                <TableColumn fx:id="issue" minWidth="100.0" prefWidth="75.0" text="ISSUE" />
+                  <TableColumn fx:id="start" prefWidth="100.0" text="START EXEC" />
+                  <TableColumn fx:id="end" prefWidth="100.0" text="END EXEC" />
+                  <TableColumn fx:id="writeBack" prefWidth="108.0" text="WRITE BACK" />
+              </columns>
+            </TableView>
+         </content>
+      </TitledPane>
+      <TitledPane animated="false" layoutX="241.0" layoutY="336.0" prefHeight="200.0" prefWidth="225.0" text="LOAD BUFFER">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="load" prefHeight="171.0" prefWidth="226.0">
+                     <columns>
+                        <TableColumn fx:id="ldlab" prefWidth="70.0" text="LABEL" />
+                        <TableColumn fx:id="ldaddress" prefWidth="70.0" text="ADDRESS" />
+                        <TableColumn fx:id="ldbusy" prefWidth="70.0" text="BUSY" />
+                     </columns>
+                  </TableView>
+               </children></AnchorPane>
+         </content>
+      </TitledPane>
+      <TitledPane animated="false" layoutX="479.0" layoutY="336.0" prefHeight="200.0" prefWidth="310.0" text="STORE BUFFER">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="302.0">
+               <children>
+                  <TableView fx:id="store" layoutX="2.0" prefHeight="171.0" prefWidth="303.0">
+                     <columns>
+                        <TableColumn fx:id="slab" prefWidth="60.0" text="LABEL" />
+                        <TableColumn fx:id="saddress" prefWidth="60.0" text="ADDRESS" />
+                        <TableColumn fx:id="sbusy" prefWidth="60.0" text="BUSY" />
+                        <TableColumn fx:id="v" prefWidth="60.0" text="V" />
+                        <TableColumn fx:id="q" prefWidth="60.0" text="Q" />
+                     </columns>
+                  </TableView>
+               </children></AnchorPane>
+         </content>
+      </TitledPane>
+      <ProgressBar fx:id="myProgressBar" layoutX="241.0" layoutY="299.0" prefHeight="27.0" prefWidth="348.0" progress="0.0" />
+      <Button fx:id="back" layoutX="598.0" layoutY="297.0" mnemonicParsing="false" onAction="#back" text="BACK" />
+      <Button fx:id="next" layoutX="662.0" layoutY="297.0" mnemonicParsing="false" onAction="#next" text="NEXT" />
+      <Button fx:id="reset" layoutX="724.0" layoutY="297.0" mnemonicParsing="false" onAction="#reset" text="RESET" />
+      <Pane layoutX="243.0" layoutY="6.0" prefHeight="30.0" prefWidth="200.0">
+         <children>
+            <Label text="CLOCK CYCLE : " textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="clk" alignment="CENTER" layoutX="123.0" prefHeight="27.0" prefWidth="77.0" text="0" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <TitledPane animated="false" layoutX="14.0" layoutY="275.0" prefHeight="257.0" prefWidth="200.0" text="REGISTERS">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="registers" layoutX="-1.0" layoutY="-1.0" prefHeight="225.0" prefWidth="200.0">
+                     <columns>
+                        <TableColumn fx:id="regname" prefWidth="65.0" text="LABEL" />
+                        <TableColumn fx:id="regval" prefWidth="65.0" text="VALUE" />
+                        <TableColumn fx:id="regwait" prefWidth="65.0" text="WAITING" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </content>
+      </TitledPane>
+   </children>
+</AnchorPane>
