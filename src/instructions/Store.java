@@ -12,7 +12,7 @@ public class Store extends Instruction {
     }
 
     public void writeBack() {
-        listener.onStore(getAddress(), vi + vj);
+        listener.onStore(getAddress(), vi);
         status = FINISHED;
     }
 

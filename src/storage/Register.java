@@ -9,7 +9,7 @@ public class Register {
 
     Register(int idx){
         this.num = idx;
-        value = null;
+        value = 0.0;
         waitingOnLabel = null;
     }
 

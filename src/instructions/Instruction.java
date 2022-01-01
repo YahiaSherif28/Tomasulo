@@ -92,11 +92,11 @@ public abstract class Instruction {
 
 
     public void labelReady(String label, Double value) {
-        if (qi.equals(label)) {
+        if (qi != null && qi.equals(label)) {
             qi = null;
             vi = value;
         }
-        if (qj.equals(label)) {
+        if (qj != null && qj.equals(label)) {
             qj = null;
             vj = value;
         }

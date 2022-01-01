@@ -42,8 +42,8 @@ public class Tomasulo implements InstructionListener {
             issue();
             exec();
             writeBack();
-            updateStatus();
             showState(loopCounter);
+            updateStatus();
         }
     }
 
@@ -52,12 +52,12 @@ public class Tomasulo implements InstructionListener {
         System.out.println("==============");
         System.out.println("Instruction Queue:");
         System.out.println("===================");
-        for(Instruction i : instructionQueue)
+        for (Instruction i : instructionQueue)
             System.out.println(i);
         System.out.println("---------------------------------------------------");
         System.out.println("Ready To Write Back Instructions:");
         System.out.println("===================");
-        for(Instruction i : readyToWriteBack)
+        for (Instruction i : readyToWriteBack)
             System.out.println(i);
         System.out.println("---------------------------------------------------");
         System.out.println("Add/Sub Buffer:");
@@ -92,7 +92,7 @@ public class Tomasulo implements InstructionListener {
     public void updateStatus() {
         for (Buffer buffer : buffers) {
             buffer.changeIssuedToReady();
-            buffer.getReadyToWriteBack();
+            readyToWriteBack.addAll(buffer.getReadyToWriteBack());
             buffer.removeFinishedInstructions();
         }
     }
@@ -147,7 +147,6 @@ public class Tomasulo implements InstructionListener {
 
     public void issueALU(Instruction instruction) {
 
-        registerFile.setLabel(instruction.getLabel(), instruction.getDestinationRegister());
         Double value1 = registerFile.getValue(instruction.getSourceRegister1());
         String label1 = registerFile.getLabel(instruction.getSourceRegister1());
         if (value1 != null) {
@@ -170,6 +169,7 @@ public class Tomasulo implements InstructionListener {
         if (instruction.getQj() != null) {
             addInWaitingOnValue(instruction.getQj(), instruction);
         }
+        registerFile.setLabel(instruction.getLabel(), instruction.getDestinationRegister());
     }
 
     public void issueStore(Store instruction) {
